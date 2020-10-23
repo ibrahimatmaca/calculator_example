@@ -91,8 +91,7 @@ class _CalculatorState extends State<Calculator> {
   Color _colorSelect(int _index) {
     if (_index < 2)
       return Colors.grey;
-    else if (_index == 2 ||
-        _index % 4 == 3)
+    else if (_index == 2 ||_index % 4 == 3)
       return Colors.orange;
     else
       return Colors.white24;
