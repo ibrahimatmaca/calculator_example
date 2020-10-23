@@ -10,6 +10,7 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   String _data = "";
+  String _oldOperation = "";
 
   List<String> items = [
     'C',
@@ -38,31 +39,56 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  _data,
-                  style: TextStyle(color: Colors.white, fontSize: 56),
-                )),
-          ),
-          Expanded(
-            flex: 2,
-            child: _gridViewBuilder(),
-          ),
-        ],
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: _upTextColumn(),
+            ),
+            Expanded(
+              child: _gridViewBuilder(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  // TODO: Burada gridview ile gridlerimizi yaratarak butonlar oluşturduk
+// TODO: Here is the field to be inspected when the calculator's buttons are clicked.
+  _upTextColumn() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height/6,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            _oldOperation,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white38, fontSize: 36),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height/9,
+          alignment: Alignment.centerRight,
+          child: Text(
+            _data,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white, fontSize: 56),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // TODO: Here we created our grids with gridview and created buttons.
   GridView _gridViewBuilder() {
     return GridView.builder(
-        padding: EdgeInsets.only(left: 15,right: 5,top: 5,bottom: 5),
+        padding: EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
+        physics: NeverScrollableScrollPhysics(),
         itemCount: items.length,
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
@@ -91,7 +117,7 @@ class _CalculatorState extends State<Calculator> {
   Color _colorSelect(int _index) {
     if (_index < 2)
       return Colors.grey;
-    else if (_index == 2 ||_index % 4 == 3)
+    else if (_index == 2 || _index % 4 == 3)
       return Colors.orange;
     else
       return Colors.white24;
@@ -101,31 +127,32 @@ class _CalculatorState extends State<Calculator> {
     if (_index >= 2) {
       if (_data == "" || _data == "0")
         _data = items[_index];
-      else if (_index == items.length - 1) //Equals
+      else if ("=" == items[_index]) //Equals
         equalsData();
-      else
+      else {
         _data = _data + items[_index];
+        _oldOperation = _data;
+      }
     } else if (_index == 0 && _data.length != 0) {
       // C
       deleteChar();
     } else if (_index == 1) {
       //AC
       _data = "";
+      _oldOperation = "";
     }
   }
 
   deleteChar() {
     _data = _data.substring(0, _data.length - 1);
+    _oldOperation = _oldOperation.substring(0, _oldOperation.length - 1);
   }
 
-  equalsData() { // Equals function
+// Equals function
+  equalsData() {
     Parser _parse = Parser();
     Expression _exp = _parse.parse(_data);
     ContextModel cm = ContextModel();
     _data = '${_exp.evaluate(EvaluationType.REAL, cm)}';
   }
-
-
 }
-
-
