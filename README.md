@@ -4,8 +4,8 @@ Building a Iphone Calculator Clone in Flutter.
 
 ## ScreenShot
 
-<img src="Screenshot_1.png" width="300" height="400">
-<img src="Screenshot_2.png" width="300" height="400">
+<img src="Screenshot_1.png" width="144" height="288">
+<img src="Screenshot_2.png" width="144" height="288">
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
