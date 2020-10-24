@@ -1,12 +1,11 @@
 # calculator_example
 
-A new Flutter project.
+Building a Iphone Calculator Clone in Flutter.
 
-## Getting Started
+## ScreenShot
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+<img src="Screenshot_1.png">
+<img src="Screenshot_2.png">
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
